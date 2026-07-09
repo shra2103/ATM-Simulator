@@ -1,4 +1,3 @@
-## 1. What is this repo?
 
 The **ATM-Simulator** repository is a desktop-based bank management application developed in Java. It provides a simulated interface of an automated teller machine (ATM) alongside a bank portal to handle customer registration, database-driven authentication, and core banking transactions.
 
@@ -11,7 +10,7 @@ The system features:
 
 ---
 
-## 2. How all main components connect
+## 1. How all main components connect
 
 The system follows a typical client-server architectural partition for desktop programs, where the frontend components are driven by Java's Abstract Window Toolkit (AWT) and Swing frameworks, and the persistence engine relies on a remote SQL server through JDBC API adapters.
 
@@ -28,7 +27,7 @@ The execution lifecycle of this simulator flows as follows:
 4.  **Transaction Modules**: Every subsequent screen (`src/deposite.java`, `src/withdrawl.java`, `src/FastCash.java`, `src/balanceEnquiry.java`, `src/miniStatement.java`, and `src/pinChange.java`) accepts the verified customer `pin` as a state variable in its constructor to guarantee transactions execute only on the authenticated account.
 
 
-## 3. Repository Structure
+## 2. Repository Structure
 
 ```shell
 ATM-Simulator/
@@ -86,7 +85,7 @@ ATM-Simulator/
 
 ---
 
-## 4. Other important information
+## 3. Other important information
 
 ### Technology Stack & Libraries
 *   **Programming Language**: Java (SE)
