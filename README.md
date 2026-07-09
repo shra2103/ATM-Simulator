@@ -113,40 +113,4 @@ Based on SQL update operations in the code, the codebase expects a MySQL databas
 6.  **`transactions` table**: Appended dynamically during actions in `src/deposite.java`, `src/withdrawl.java`, and `src/FastCash.java`
     *   `pin`, `date` (formatted as `yyyy-MM-dd HH:mm:ss`), `type_of_transaction`, `amount`.
 
-### Implementation Highlights
-
-#### Validation Routines
-In `src/signup1.java` and `src/signup2.java`, input values are rigorously checked prior to database execution. The application enforces validation rules utilizing regular expressions:
-*   **Email validation**: Handled by pattern:
-    ```java
-    "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@gmail.com$"
-    ```
-*   **PAN format**: Enforces standard Indian PAN rules:
-    ```java
-    "^[A-Z]{5}\\d{4}[A-Z]{1}$"
-    ```
-*   **Aadhaar validation**: Requires exactly 12 numeric digits:
-    ```java
-    "^\\d{12}$"
-    ```
-*   **Pincode validation**: Ensures an exact 6-digit numeric match:
-    ```java
-    "^[0-9]+$"
-    ```
-
-#### Synchronization of PIN Changes
-An important transactional requirement occurs during PIN modifications in `src/pinChange.java`. To prevent integrity failures across tables, a cascade update must occur. The system performs serial executions to update the PIN reference across the entire schema:
-```java
-conn c = new conn();
-String query1 = "update signup3 set pin='"+rpin+"' where pin='"+pin+"'";
-c.s.executeUpdate(query1);
-String query2 = "update login set pin='"+rpin+"' where pin='"+pin+"'";
-c.s.executeUpdate(query2);
-String query3 = "update transactions set pin='"+rpin+"' where pin='"+pin+"'";
-c.s.executeUpdate(query3);
-String query4 = "update balance set pin='"+rpin+"' where pin='"+pin+"'";
-c.s.executeUpdate(query4);
-```
-
-#### Safe Balance Management
-When handling deposit and withdrawal requests, the system prevents overdraft scenarios. Files like `src/withdrawl.java` and `src/FastCash.java` dynamically query the SQL engine to retrieve the current available balance for the logged-in user, cast it into an integer, compare it against the input value, and throw error notifications via `JOptionPane` if funds are insufficient.
+ions via `JOptionPane` if funds are insufficient.
